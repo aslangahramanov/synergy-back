@@ -1,0 +1,132 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+{% load i18n %}
+
+
+
+{% block title %}
+
+<title>{{article.title}}</title>
+
+{% endblock title %}
+
+
+
+{% block main %}
+      <section class="page-header">
+        <div
+          class="page-header__bg"
+          style="
+            background-image: url({% static "assets/images/background/footer-bg-1-1.jpg" %});
+          "
+        ></div>
+        <!-- /.page-header__bg -->
+        <div class="container">
+          <ul class="list-unstyled thm-breadcrumb">
+            <li><a href="{% url "info:home" %}">{% trans "Ana Səhifə" %}</a></li>
+            <li><a href="{% url "blog:blog" %}">{% trans "Xəbərlər" %}</a></li>
+            <li class="active"><a href="#">{% trans "Xəbərlərin Detalları" %}</a></li>
+          </ul>
+          <!-- /.list-unstyled -->
+          <h2 class="page-header__title">{% trans "Xəbərlərin Detalları" %}</h2>
+          <!-- /.page-header__title -->
+        </div>
+        <!-- /.container -->
+      </section>
+      <!-- /.page-header -->
+
+      <section class="blog-details">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8">
+              <div class="blog-details__main">
+                <div class="blog-one__image">
+                  <a href="{% url "blog:article" pk=article.pk slug=article.slug %}" class="blog-one__date"
+                    >{{article.created.date|date:"d F Y"}}</a
+                  >
+                  <div class="blog-one__image-inner">
+                    <img src="{{article.image.url}}" alt="" />
+                  </div>
+                  <!-- /.blog-one__image-inner -->
+                </div>
+                <!-- /.blog-one__image -->
+                <div class="blog-details__content">
+                  <h3 class="blog-details__main-title">
+                    {{article.title}}
+                  </h3>
+                  <p>
+                    {{article.description|linebreaks}}
+                  </p>
+                </div>
+                <!-- /.blog-details__content -->
+                <div class="blog-details__content-bottom">
+                  <div class="row">
+                      {% for image in gallery %}
+                      
+                      <div class="col-lg-4 col-md-6">
+                        <div class="gallery-one__single">
+                          <img src="{{image.image.url}}" alt="" />
+                          <a
+                            href="{{image.image.url}}"
+                            class="img-popup"
+                            ><i class="scubo-icon-plus-symbol"></i
+                          ></a>
+                        </div>
+                        <!-- /.gallery-one__single -->
+                      </div>
+                      
+                      {% endfor %}
+                  </div>
+                  <!-- /.blog-details__tags -->
+             
+                  <!-- /.footer-widget__social -->
+                </div>
+                <!-- /.blog-details__content-bottom -->
+              </div>
+              <!-- /.blog-details__main -->
+            </div>
+            <!-- /.col-lg-8 -->
+            <div class="col-lg-4">
+              <div class="sidebar">
+                <div class="sidebar__single sidear__search">
+                  <form action="#" class="sidebar__search-form">
+                    <input type="text" placeholder="{% trans "Axtar..." %}" />
+                    <button type="submit">
+                      <i class="scubo-icon-magnifying-glass"></i>
+                    </button>
+                  </form>
+                  <!-- /.sidebar__search-form -->
+                </div>
+                <!-- /.sidebar__single sidear__search -->
+
+                <!-- /.sidebar__single  -->
+                <div class="sidebar__single sidebar__post">
+                  <h3 class="sidebar__title">{% trans "Ən Son Məqalələr" %}</h3>
+                  <!-- /.sidebar__title -->
+                  <ul class="sidebar__post-list list-unstyled">
+                    {% for article in last_articles %}
+                    <li>
+                      <img src="{{article.image.url}}" alt="" />
+                      <h3>
+                        <a href="{% url "blog:article" pk=article.pk slug=article.slug %}"
+                          >{{article.title}}</a
+                        >
+                      </h3>
+                    </li>
+                    {% endfor %}
+                  </ul>
+                  <!-- /.sidebar__post-list list-unstyled -->
+                </div>
+                <!-- /.sidebar__single  -->
+              </div>
+              <!-- /.sidebar -->
+            </div>
+            <!-- /.col-lg-4 -->
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.container -->
+      </section>
+      <!-- /.blog-details -->
+      
+{% endblock main %}

@@ -1,0 +1,113 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+{% load urlhelper %}
+{% load i18n %}
+
+
+{% block title %}
+
+<title>{% trans "Scubo - Blog" %}</title>
+
+{% endblock title %}
+
+
+{% block main %}
+      <section class="page-header">
+        <div
+          class="page-header__bg"
+          style="
+            background-image: url({% static "assets/images/background/footer-bg-1-1.jpg" %});
+          "
+        ></div>
+        <!-- /.page-header__bg -->
+        <div class="container">
+          <ul class="list-unstyled thm-breadcrumb">
+            <li><a href="{% url "info:home" %}">{% trans "Ana Səhifə" %}</a></li>
+            <li class="active"><a href="#">{% trans "Xəbərlər" %}</a></li>
+          </ul>
+          <!-- /.list-unstyled -->
+          <h2 class="page-header__title">{% trans "Son Xəbərlər" %}</h2>
+          <!-- /.page-header__title -->
+        </div>
+        <!-- /.container -->
+      </section>
+      <!-- /.page-header -->
+
+      <section class="blog-one">
+        <div class="container">
+          <div class="row">
+            {% for article in articles %}
+            
+            <div class="col-lg-4 col-md-12">
+              <div class="blog-one__single">
+                <div class="blog-one__image">
+                  <a href="{% url "blog:article" pk=article.pk slug=article.slug %}" class="blog-one__date"
+                    >{{ article.created.date|date:"d F Y" }}</a
+                  >
+                  <div class="blog-one__image-inner">
+                    <img src="{{article.image.url}}" alt="" />
+                    <a href="{% url "blog:article" pk=article.pk slug=article.slug %}"
+                      ><i class="scubo-icon-plus-symbol"></i
+                    ></a>
+                  </div>
+                  <!-- /.blog-one__image-inner -->
+                </div>
+                <!-- /.blog-one__image -->
+                <div class="blog-one__content">
+                  <h3>
+                    <a href="{% url "blog:article" pk=article.pk slug=article.slug %}"
+                      >{{article.title}}</a
+                    >
+                  </h3>
+                  <div class="blog-one__p">
+                    <p>
+                      {{ article.description|truncatechars:100 }}
+                    </p>
+                  </div>
+                  <div class="blog-one__meta">
+                    <div class="thm-btn news-detail">
+                      <a href="{% url "blog:article" pk=article.pk slug=article.slug %}">{% trans "ətraflı" %}</a>
+                    </div>
+                  </div>
+                  <!-- /.blog-one__meta -->
+                </div>
+                <!-- /.blog-one__content -->
+              </div>
+              <!-- /.blog-one__single -->
+            </div>
+            
+            {% endfor %}
+          </div>
+          <!-- /.row -->
+          <div class="post-pagination">
+            {% if page.has_previous %}
+              <a href="?{% edit_query request page=page.previous_page_number %}" class="post-pagination__prev">
+                <i class="fa fa-angle-left"></i>
+              </a>
+            {% endif %}
+  
+  
+            {% for page_number in paginator.page_range %}
+  
+            {% if page_number == page.number %}
+              <a href="?{% edit_query request page=page_number %}" class="active">{{page_number}}</a>
+            {% else %}
+              <a href="?{% edit_query request page=page_number %}">{{page_number}}</a>
+            {% endif %}
+  
+            {% endfor %}
+  
+            {% if page.has_next %}
+              <a href="?{% edit_query request page=page.next_page_number %}" class="post-pagination__next">
+                <i class="fa fa-angle-right"></i>
+              </a>
+            {% endif %}
+          </div>
+          <!-- /.post-pagination -->
+        </div>
+        <!-- /.container -->
+      </section>
+      <!-- /.blog-one -->
+
+      
+{% endblock main %}

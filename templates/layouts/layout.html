@@ -1,0 +1,322 @@
+{% load static %}
+{% load i18n %}
+
+
+<!DOCTYPE html>
+<html lang="tr" dir="ltr">
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  {% block title %}{% endblock title %}
+
+  <!-- favicons -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="" />
+
+  <!-- Fonts URL -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Barlow+Condensed:300,400,500,600,700,800%7CUbuntu:400,500,700&amp;display=swap"
+    rel="stylesheet" />
+
+  <!--Font awesome-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Plugins CSS -->
+  <link rel="stylesheet" href="{% static "assets/css/bootstrap.min.css" %}" />
+  <link rel="stylesheet" href="{% static "assets/css/bootstrap-datepicker.min.css" %}" />
+  <link rel="stylesheet" href="{% static "assets/css/bootstrap-select.min.css" %}" />
+  <link rel="stylesheet" href="{% static "assets/css/fontawesome-all.min.css" %}" />
+  <link rel="stylesheet" href="{% static "assets/css/jquery.mCustomScrollbar.min.css" %}" />
+  <link rel="stylesheet" href="{% static "assets/css/magnific-popup.css" %}" />
+  <link rel="stylesheet" href="{% static "assets/css/owl.carousel.min.css" %}" />
+  <link rel="stylesheet" href="{% static "assets/css/owl.theme.default.min.css" %}" />
+  <link rel="stylesheet" href="{% static "assets/css/animate.css" %}" />
+  <link rel="stylesheet" href="{% static "assets/css/hover-min.css" %}" />
+  <link rel="stylesheet" href="{% static "assets/css/bootstrap.min.css" %}" />
+  <link rel="stylesheet" href="{% static "assets/css/scubo-icons.css" %}" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static "assets/css/style.css" %}" />
+  <link rel="stylesheet" href="{% static "assets/css/responsive.css" %}" />
+  <link rel="stylesheet" href="{% static "assets/css/swiper-bundle.css" %}">
+</head>
+
+<body>
+  <div class="page-wrapper">
+    <div class="topbar-one">
+      <div class="container">
+        <div class="topbar-one__left">
+          <a class="main-nav-one__infos-email" href="mailto:needhelp@example.com"><i
+              class="fa fa-envelope"></i>{{contact_info.mail}}</a>
+          <a class="main-nav-one__infos-phone" href="tel:{{contact_info.phone}}"><i class="fa fa-phone-alt"></i>{{contact_info.phone}}</a>
+        </div>
+        <!-- /.topbar-one__left -->
+        <div class="topbar-one__social">
+          <a href="{% if social_media.facebook %}{{social_media.facebook}}{% else %}#{% endif %}"><i class="fab fa-facebook-square"></i></a>
+          <a href="{% if social_media.twitter %}{{social_media.twitter}}{% else %}#{% endif %}"><i class="fab fa-twitter"></i></a>
+          <a href="{% if social_media.youtube %}{{social_media.youtube}}{% else %}#{% endif %}"><i class="fab fa-youtube"></i></a>
+          <a href="{% if social_media.instagram %}{{social_media.instagram}}{% else %}#{% endif %}"><i class="fab fa-instagram"></i></a>
+          <a href="{% if social_media.tiktok %}{{social_media.tiktok}}{% else %}#{% endif %}"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="{% if social_media.whatsapp %}{{social_media.whatsapp}}{% else %}#{% endif %}"><i class="fab fa-whatsapp"></i></a>
+          <a href="{% if social_media.linkedin %}{{social_media.linkedin}}{% else %}#{% endif %}"><i class="fab fa-linkedin"></i></a>
+        </div>
+        <!-- /.topbar-one__social -->
+      </div>
+      <!-- /.container -->
+    </div>
+    <!-- /.topbar-one -->
+
+    <nav class="main-nav-one stricky">
+      <div class="container">
+        <div class="inner-container">
+          <!-- /.main-nav__main-navigation -->
+          <div class="logo-box">
+            <a href="{% url "info:home" %}">
+              <img src="{{static_info.header_logo.url}}" alt="" width="143" />
+            </a>
+            <a href="#" class="side-menu__toggler"><i class="fa fa-bars"></i></a>
+          </div>
+          <!-- /.logo-box -->
+          <div class="main-nav__main-navigation">
+            <ul class="main-nav__navigation-box">
+              <li>
+                <a href="{% url "info:home" %}">{% trans "Ana Səhifə" %}</a>
+              </li>
+              <li><a href="{% url "info:about" %}">{% trans "haqqımızda" %}</a></li>
+              <li class="dropdown">
+                <a href="{% url "shop:products" %}">{% trans "məhsullar" %} <i class="fa fa-chevron-down"></i></a>
+                <ul>
+                  {% for category in categories %}
+                    <li><a href="{% url "shop:products" %}?category={{category.slug}}">{{category.title}}</a></li>
+                  {% endfor %}
+                </ul>
+              </li>
+              <li>
+                <a href="{% url "blog:blog" %}">{% trans "bloglar" %}</a>
+              </li>
+              <li><a href="{% url "info:contact" %}">{% trans "Əlaqə" %}</a></li>
+              <li class="dropdown language">
+                <a>{{ request.LANGUAGE_CODE }} <i class="fa fa-chevron-down"></i></a>
+                <ul>
+                  <li><a href="#" onclick="changeLanguage('en')">EN</a></li>
+                  <li><a href="#" onclick="changeLanguage('ru')">RU</a></li>
+                  <li><a href="#" onclick="changeLanguage('az')">AZ</a></li>
+                </ul>
+                <form id="language-form" method="post" action="{% url 'set_language' %}">
+                  {% csrf_token %}
+                  <input type="hidden" name="language" id="language-input">
+              </form>
+            </li>
+            </ul>
+            <!-- /.main-nav__navigation-box -->
+          </div>
+
+        </div>
+        <!-- /.inner-container -->
+      </div>
+      <!-- /.container -->
+    </nav>
+    <!-- /.main-nav-one -->
+
+
+
+    {% block main %}
+    
+    
+    {% endblock main %}
+
+
+
+    <footer class="site-footer-one">
+      <div class="site-footer-one__bg" style="
+            background-image: url({% static "assets/images/background/footer-bg-1-1.jpg);
+          "></div>
+      <!-- /.site-footer-one__bg -->
+
+      <!-- footer fishes -->
+      <img src="{% static "assets/images/shapes/fish-f-1.png" %}" alt="" class="site-footer__fish-1" />
+      <img src="{% static "assets/images/shapes/fish-f-2.png" %}" alt="" class="site-footer__fish-2" />
+      <img src="{% static "assets/images/shapes/fish-f-3.png" %}" alt="" class="site-footer__fish-3" />
+
+      <!-- footer trees -->
+      <img src="{% static "assets/images/shapes/tree-f-1.png" %}" class="site-footer__tree-1" alt="" />
+      <img src="{% static "assets/images/shapes/tree-f-2.png" %}" class="site-footer__tree-2" alt="" />
+
+      <div class="site-footer-one__upper">
+        <div class="container">
+          <div class="footer-widget-row">
+            <div class="footer-widget footer-widget__about">
+              <div class="footer-widget__inner">
+                <a href="{% url "info:home" %}">
+                  <img src="{{static_info.footer_logo.url}}" alt="" width="143" />
+                </a>
+                <p>
+                  {{static_info.products_slogan}}
+                </p>
+              </div>
+              <!-- /.footer-widget__inner -->
+            </div>
+
+            <!-- /.footer-widget -->
+            <div class="footer-widget footer-widget__links__widget-3">
+              <div class="footer-widget__inner">
+                <h3 class="footer-widget__title">Links</h3>
+                <!-- /.footer-widget__title -->
+                <ul class="footer-widget__links-list list-unstyled">
+                  <li><a href="#">About Us</a></li>
+                  <li><a href="#">Our History</a></li>
+                  <li><a href="#">Contact</a></li>
+                  <li><a href="#">Popular Courses</a></li>
+                  <li><a href="#">How It Works</a></li>
+                  <li><a href="#">Help Center</a></li>
+                  <li><a href="#">Privacy Policy</a></li>
+                  <li><a href="#">Terms & Conditions</a></li>
+                </ul>
+                <!-- /.footer-widget__links-list -->
+              </div>
+              <!-- /.footer-widget__inner -->
+            </div>
+            <!-- /.footer-widget -->
+            <div class="footer-widget footer-widget__social__widget">
+              <div class="footer-widget__inner">
+                <h3 class="footer-widget__title">İzlə və abone ol</h3>
+                <div class="sidebar__single sidear__search">
+
+                  <form method="POST" action="{% url "info:home" %}" class="sidebar__search-form">
+                    {% csrf_token %}
+                    <input type="email" placeholder="Email" name="mail">
+                    <button type="submit">
+                      <i class="scubo-icon-magnifying-glass"></i>
+                    </button>
+                  </form>
+
+                  <!-- /.sidebar__search-form -->
+
+                  <!-- SUCCESS MESSAGE -->
+                  {% if sub_success_message %}
+                  <div class="wpcf7-response-output" aria-hidden="true"><i class="fa-solid fa-thumbs-up"></i>{{sub_success_message}}</div>
+                  {% endif %}
+                </div>
+                <!-- /.footer-widget__title -->
+                <div class="footer-widget__social">
+                  <a href="{% if social_media.facebook %}{{social_media.facebook}}{% else %}#{% endif %}"><i class="fab fa-facebook-square"></i></a>
+                  <a href="{% if social_media.twitter %}{{social_media.twitter}}{% else %}#{% endif %}"><i class="fab fa-twitter"></i></a>
+                  <a href="{% if social_media.youtube %}{{social_media.youtube}}{% else %}#{% endif %}"><i class="fab fa-youtube"></i></a>
+                  <a href="{% if social_media.instagram %}{{social_media.instagram}}{% else %}#{% endif %}"><i class="fab fa-instagram"></i></a>
+                  <a href="{% if social_media.tiktok %}{{social_media.tiktok}}{% else %}#{% endif %}"><i class="fa-brands fa-tiktok"></i></a>
+                  <a href="{% if social_media.whatsapp %}{{social_media.whatsapp}}{% else %}#{% endif %}"><i class="fab fa-whatsapp"></i></a>
+                  <a href="{% if social_media.linkedin %}{{social_media.linkedin}}{% else %}#{% endif %}"><i class="fab fa-linkedin"></i></a>
+                </div>
+                <!-- /.footer-widget__social -->
+              </div>
+              <!-- /.footer-widget__inner -->
+            </div>
+            <!-- /.footer-widget -->
+          </div>
+          <!-- /.footer-widget-row -->
+        </div>
+        <!-- /.container -->
+      </div>
+      <!-- /.site-footer-one__upper -->
+      <div class="site-footer__bottom">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-4">
+              <a href="tel:{{contact_info.phone}}"><i class="fa fa-phone-alt"></i><span>{{contact_info.phone}}</span></a>
+            </div>
+            <!-- /.col-lg-4 -->
+            <div class="col-lg-4">
+              <a href="mailto:{{contact_info.mail}}"><i class="fa fa-envelope"></i><span>{{contact_info.mail}}</span></a>
+            </div>
+            <!-- /.col-lg-4 -->
+            <div class="col-lg-4">
+              <a href="{% url "info:contact" %}"><i class="fa fa-map"></i><span>{{contact_info.address}}</span></a>
+            </div>
+            <!-- /.col-lg-4 -->
+          </div>
+
+          <!-- /.row -->
+        </div>
+
+        <!-- /.container -->
+      </div>
+
+      <!-- /.site-footer__bottom -->
+
+      <div class="copyright">
+        <p>
+          &copy; Copyright 2024 by
+          <a href="https://khanbutagroup.az/" style="color: #fff" target="_blank">Khan Buta Group</a>
+        </p>
+      </div>
+    </footer>
+    <!-- /.site-footer-one -->
+  </div>
+  <!-- /.page-wrapper -->
+
+  <div class="side-menu__block">
+    <a href="#" class="side-menu__toggler side-menu__close-btn"><i class="fa fa-times"></i>
+      <!-- /.fa fa-close --></a>
+
+    <div class="side-menu__block-overlay custom-cursor__overlay">
+      <div class="cursor"></div>
+      <div class="cursor-follower"></div>
+    </div>
+    <!-- /.side-menu__block-overlay -->
+    <div class="side-menu__block-inner">
+      <a href="{% url "info:home" %}" class="side-menu__logo"><img src="{% static "assets/images/logo-3-1.png" %}" alt="" width="143" /></a>
+      <nav class="mobile-nav__container">
+        <!-- content is loading via js -->
+      </nav>
+   
+      <div class="side-menu__social">
+        <a href="{% if social_media.facebook %}{{social_media.facebook}}{% else %}#{% endif %}"><i class="fab fa-facebook-square"></i></a>
+        <a href="{% if social_media.twitter %}{{social_media.twitter}}{% else %}#{% endif %}"><i class="fab fa-twitter"></i></a>
+        <a href="{% if social_media.youtube %}{{social_media.youtube}}{% else %}#{% endif %}"><i class="fab fa-youtube"></i></a>
+        <a href="{% if social_media.instagram %}{{social_media.instagram}}{% else %}#{% endif %}"><i class="fab fa-instagram"></i></a>
+        <a href="{% if social_media.tiktok %}{{social_media.tiktok}}{% else %}#{% endif %}"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="{% if social_media.whatsapp %}{{social_media.whatsapp}}{% else %}#{% endif %}"><i class="fab fa-whatsapp"></i></a>
+        <a href="{% if social_media.linkedin %}{{social_media.linkedin}}{% else %}#{% endif %}"><i class="fab fa-linkedin"></i></a>
+      </div>
+    </div>
+    <!-- /.side-menu__block-inner -->
+  </div>
+  <!-- /.side-menu__block -->
+
+  <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fa fa-angle-up"></i></a>
+
+
+  <!-- Template JS -->
+  <script src="{% static "assets/js/jquery.min.js" %}"></script>
+  <script src="{% static "assets/js/bootstrap.bundle.min.js" %}"></script>
+  <script src="{% static "assets/js/bootstrap-datepicker.min.js" %}"></script>
+  <script src="{% static "assets/js/bootstrap-select.min.js" %}"></script>
+  <script src="{% static "assets/js/isotope.js" %}"></script>
+  <script src="{% static "assets/js/jquery.ajaxchimp.min.js" %}"></script>
+  <script src="{% static "assets/js/jquery.counterup.min.js" %}"></script>
+  <script src="{% static "assets/js/jquery.magnific-popup.min.js" %}"></script>
+  <script src="{% static "assets/js/jquery.mCustomScrollbar.concat.min.js" %}"></script>
+  <script src="{% static "assets/js/jquery.validate.min.js" %}"></script>
+  <script src="{% static "assets/js/owl.carousel.min.js" %}"></script>
+  <script src="{% static "assets/js/TweenMax.min.js" %}"></script>
+  <script src="{% static "assets/js/waypoints.min.js" %}"></script>
+  <script src="{% static "assets/js/wow.min.js" %}"></script>
+  <script src="{% static "assets/js/slick.min.js" %}"></script>
+  <script src="{% static "assets/js/swiper-bundle.min.js" %}"></script>
+  <!-- Custom Scripts -->
+  <script src="{% static "assets/js/theme.js" %}"></script>
+
+  <script>
+    function changeLanguage(language) {
+        document.getElementById("language-input").value = language;
+        document.getElementById("language-form").submit();
+    }
+  </script>
+
+</body>
+
+</html> 

@@ -1,0 +1,128 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+{% load i18n %}
+
+
+{% block title %}
+
+<title>{% trans "Scubo - Əlaqə" %}</title>
+
+{% endblock title %}
+
+
+{% block main %}
+
+    <section class="contact-one">
+      <img src="{% static "assets/images/shapes/fish-contact-1.png" %}" class="contact-one__fish" alt="" />
+      <img src="{% static "assets/images/shapes/tree-contact-1.png" %}" class="contact-one__tree" alt="" />
+      <img src="{% static "assets/images/shapes/swimmer-contact-1.png" %}" class="contact-one__swimmer" alt="" />
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-4">
+            <div class="contact-one__content">
+              <h3> {% trans "Bizimlə əlaqə" %} </h3>
+              <div class="site-footer__bottom">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <a href="tel:{{contact_info.phone}}"><i class="fa fa-phone-alt"></i><span>{{contact_info.phone}}</span></a>
+                    </div>
+                    <!-- /.col-lg-4 -->
+                    <div class="col-lg-12">
+                      <a href="mailto:{{contact_info.mail}}"><i
+                          class="fa fa-envelope"></i><span>{{contact_info.mail}}</span></a>
+                    </div>
+                    <!-- /.col-lg-4 -->
+                    <div class="col-lg-12">
+                      <a href="#"><i class="fa fa-map"></i>{{contact_info.address}}</a>
+                    </div>
+                    <!-- /.col-lg-4 -->
+                  </div>
+
+                  <!-- /.row -->
+                </div>
+
+                <!-- /.container -->
+              </div>
+              <div class="footer-widget__social contact-one__social">
+                <a href="{% if social_media.facebook %}{{social_media.facebook}}{% else %}#{% endif %}"><i class="fab fa-facebook-square"></i></a>
+                <a href="{% if social_media.twitter %}{{social_media.twitter}}{% else %}#{% endif %}"><i class="fab fa-twitter"></i></a>
+                <a href="{% if social_media.youtube %}{{social_media.youtube}}{% else %}#{% endif %}"><i class="fab fa-youtube"></i></a>
+                <a href="{% if social_media.instagram %}{{social_media.instagram}}{% else %}#{% endif %}"><i class="fab fa-instagram"></i></a>
+                <a href="{% if social_media.tiktok %}{{social_media.tiktok}}{% else %}#{% endif %}"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="{% if social_media.whatsapp %}{{social_media.whatsapp}}{% else %}#{% endif %}"><i class="fab fa-whatsapp"></i></a>
+                <a href="{% if social_media.linkedin %}{{social_media.linkedin}}{% else %}#{% endif %}"><i class="fab fa-linkedin"></i></a>
+              </div>
+              <!-- /.contact-one__social -->
+            </div>
+            <!-- /.contact-one__content -->
+          </div>
+          <!-- /.col-xl-4 -->
+          <div class="col-xl-8">
+            {% if result == "success" %}
+              <div class="col-xl-12" style="border: 1px solid green; background-color: green; margin-bottom: 20px; padding: 2rem">
+                <p>{% trans "Müraciət uğurla göndərildi!" %}</p>
+              </div>
+            {% elif result == "fail" %}
+              <div class="col-xl-12" style="border: 1px solid red; background-color: red; margin-bottom: 20px; padding: 2rem">
+                <p>{% trans "Müraciətin göndərilməsində səhvlik oldu!" %}</p>
+              </div>
+            {% endif %}
+            <form method="POST" action="{% url "info:contact" %}"
+              class="contact-one__form contact-form-validated">
+              {% csrf_token %}
+              <div class="row">
+                <div class="col-md-6">
+                  {{form.full_name}}
+                </div>
+                <!-- /.col-md-6 -->
+                <div class="col-md-6">
+                  {{form.email}}
+                </div>
+                <!-- /.col-md-6 -->
+                <div class="col-md-6">
+                  {{form.phone}}
+                </div>
+                <!-- /.col-md-6 -->
+                <div class="col-md-6">
+                  {{form.subject}}
+                </div>
+                <!-- /.col-md-6 -->
+
+                <!-- /.col-md-12 -->
+                <div class="col-md-12">
+                  {{form.message}}
+                </div>
+                <!-- /.col-md-12 -->
+                <div class="col-md-12">
+                  <button type="submit" class="thm-btn contact-one__btn">
+                    {% trans "Mesajınızı göndər" %}
+                  </button>
+                </div>
+                <!-- /.col-md-12 -->
+              </div>
+              <!-- /.row -->
+            </form>
+            <!-- /.contact-one__form -->
+            <!-- /.result -->
+          </div>
+          <!-- /.col-xl-8 -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container -->
+    </section>
+    <!-- /.contact-one -->
+
+    <!-- /.cta-one -->
+
+    <div class="energy-map">
+      <iframe
+        src="{{contact_info.map_link}}"
+        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+
+
+{% endblock main %}

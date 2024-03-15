@@ -1,0 +1,158 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+{% load i18n %}
+
+
+{% block title %}
+
+<title>{{product.title}}</title>
+
+{% endblock title %}
+
+
+{% block main %}
+    <section class="page-header">
+      <div class="page-header__bg" style="
+            background-image: url({% static "assets/images/background/footer-bg-1-1.jpg" %});
+          "></div>
+      <!-- /.page-header__bg -->
+      <div class="container">
+        <ul class="list-unstyled thm-breadcrumb">
+          <li><a href="{% url "info:home" %}">{% trans "Ana səhifə" %}</a></li>
+          <li class="active"><a href="#">{% trans "Məhsul detalı" %}</a></li>
+        </ul>
+        <!-- /.list-unstyled -->
+        <h2 class="page-header__title">{% trans "Məhsul detalı" %}</h2>
+        <!-- /.page-header__title -->
+      </div>
+      <!-- /.container -->
+    </section>
+    <!-- /.page-header -->
+
+    <section class="course-one">
+      <div class="container">
+        <div class="row product-details-area">
+          <div class="col-lg-5 col-md-6">
+            <div class="">
+              <div class="blog__inner product-details ">
+                <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
+                  <div class="swiper-wrapper product-details">
+                    {% for product_image in product_images %}
+                      <div class="swiper-slide">
+                        <img src="{{product_image.image.url}}" alt="" />
+                      </div>
+                    {% endfor %}
+                  </div>
+                  <div class="swiper-button-next"></div>
+                  <div class="swiper-button-prev"></div>
+                </div>
+                <div thumbsSlider="" class="swiper mySwiper">
+                  <div class="swiper-wrapper">
+                    {% for product_image in product_images %}
+                      <div class="swiper-slide">
+                        <img src="{{product_image.image.url}}" alt="" />
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+
+
+              </div>
+
+            </div>
+            <!-- /.course-one__single -->
+          </div>
+          <div class="col-lg-7 col-md-6">
+            <h3 class="blog-details__main-title">
+              {{product.title}}
+            </h3>
+            <div>
+              <a>{{product.category.title}}</a>
+            </div>
+            <div class="price-area">
+              {% if product.price != 0 %}
+                <div> {% trans "Qiymət" %}:<span class="price">{{product.price}}</span> ₼</div>
+              {% else %}
+                <div>{% trans "Qiymət" %}: <span>{% trans "Razılaşma yolu ilə" %}</span> </div>
+              {% endif %}
+              
+            </div>
+            <div class="details-desc">
+              <p>{{product.description}}</p>
+            </div>
+            <div class="wp-link">
+              <a href="https://api.whatsapp.com/send?phone={{phone_number}}&text={{wp_message}}" target="_blank"><i class="fab fa-whatsapp"></i>
+                {{contact_info.phone}}</a>
+            </div>
+          </div>
+        </div>
+        <!-- /.row -->
+
+      </div>
+      <!-- /.container -->
+    </section>
+    <!-- /.course-one -->
+
+
+    <!-- RELATED PRODUCTS STARS -->
+
+    <div class="course-one course-one__carousel-wrapper related-products">
+      <!-- footer fishes -->
+      <img src="{% static "assets/images/shapes/fish-1-1.png" %}" alt="" class="site-footer__fish-1" />
+      <!-- footer trees -->
+      <img src="{% static "assets/images/shapes/tree-1-1.png" %}" class="site-footer__tree-1" alt="" />
+
+
+      <div class="container">
+        <div class="block-title text-center">
+          <h3 class="text-uppercase">{% trans "Oxşar məhsullar" %}</h3>
+        </div>
+        <div class="course-one__carousel thm__owl-carousel owl-carousel owl-theme"
+          data-options='{"loop": true,"items": , "margin":30, "smartSpeed": 700, "autoplay": true, "autoplayTimeout": 5000, "autoplayHoverPause": true, "nav": false, "dots": false, "responsive": { "0": {"items": 1}, "767": {"items": 2}, "991": {"items": 2}, "1199": { "items": 3} }}'
+          data-carousel-prev-btn=".course-one__carousel-btn-left"
+          data-carousel-next-btn=".course-one__carousel-btn-right">
+          {% for sim_product in similar_products %}
+
+          <div class="item">
+            <div class="course-one__single">
+              <div class="course-one__image">
+                <a href="{% url "shop:product-detail" pk=sim_product.pk slug=sim_product.slug %}" class="course-one__cat">{{sim_product.category.title}}</a>
+                <div class="course-one__image-inner">
+                  <img src="{{sim_product.images.first.image.url}}" alt="" />
+                  <a href="{% url "shop:product-detail" pk=sim_product.pk slug=sim_product.slug %}"><i class="scubo-icon-plus-symbol"></i></a>
+                </div>
+                <!-- /.course-one__image-inner -->
+              </div>
+              <!-- /.course-one__image -->
+              <div class="course-one__content hvr-sweep-to-bottom">
+                <h3>
+                  <a href="{% url "shop:product-detail" pk=sim_product.pk slug=sim_product.slug %}">{{sim_product.title}}</a>
+                </h3>
+                <div class="course-content">
+                  <p>
+                    {{sim_product.description|truncatechars:100}}
+                  </p>
+                </div>
+              </div>
+              <!-- /.course-one__content -->
+              <a href="{% url "shop:product-detail" pk=sim_product.pk slug=sim_product.slug %}" class="course-one__book-link">{% trans "Ətraflı" %}</a>
+            </div>
+            <!-- /.course-one__single -->
+          </div>
+
+          {% endfor %}
+        </div>
+        <!-- /.course-one__carousel thm__owl-carousel owl-carousel owl-theme -->
+
+        <div class="course-one__carousel-btn__wrapper">
+          <a class="course-one__carousel-btn-left" href="#"><i class="fa fa-angle-left"></i></a>
+          <a class="course-one__carousel-btn-right" href="#"><i class="fa fa-angle-right"></i></a>
+        </div>
+        <!-- /.course-one__carousel-btn__wrapper -->
+      </div>
+      <!-- /.container -->
+    </div>
+    <!-- /.course-one__carousel-wrapper -->
+    <!-- RELATED PRODUCTS ENDS -->
+    
+{% endblock main %}

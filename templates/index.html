@@ -1,0 +1,432 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+{% load i18n %}
+
+
+{% block title %}
+
+<title>{% trans "Scubo - Ana Səhifə" %}</title>
+
+{% endblock title %}
+
+
+{% block main %}
+
+
+
+<div class="slider-one__wrapper">
+  <div class="slider-one">
+    <div class="slider-one__carousel thm__owl-dot-1 owl-carousel owl-theme thm__owl-carousel"
+      data-carousel-prev-btn=".slider-one__nav-right" data-carousel-next-btn=".slider-one__nav-left"
+      data-options='{"loop": true, "items": 1, "margin": 0, "dots": true, "nav": false, "animateOut": "slideOutDown", "animateIn": "fadeIn", "active": true, "smartSpeed": 1000, "autoplay": true, "autoplayTimeout": 7000, "autoplayHoverPause": false}'>
+      
+    {% for slider in sliders %}
+    
+    <div class="item slider-one__slide-1" style="
+        background-image: url({{slider.image.url}});
+        aspect-ratio: 1920/801;
+      ">
+    <div class="container">
+      <div class="slider-one__content">
+        <h3 class="anim-elm" style="width: 560px;">
+          {{slider.title}}
+        </h3>
+        <a href="{% url "shop:products" %}" class="thm-btn anim-elm">{% trans "Məhsullara bax" %}</a>
+      </div>
+    </div>
+    </div>
+    
+    
+    {% endfor %}
+
+
+
+      <!-- <div class="video-area">
+        <video id="video" loop autoplay muted controls>
+          <source src="https://ttib.az/uploads/mainVideo/video_preview_h264.mp4"
+            type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
+        </video>
+      </div> -->
+      <!--  /.video-item -->
+    </div>
+    <!-- /.slider-one__carousel -->
+    <div class="slider-one__nav">
+      <a href="#" class="slider-one__nav-left"><i class="fa fa-angle-right"></i></a>
+      <!-- /.slider-one__nav-left -->
+      <a href="#" class="slider-one__nav-right"><i class="fa fa-angle-left"></i></a>
+      <!-- /.slider-one__nav-right -->
+    </div>
+    <!-- /.slider-one__nav -->
+  </div>
+  <!-- /.slider-one -->
+</div>
+<!-- /.slider-one__wrapper -->
+
+<section class="cta-two">
+  <div class="cta-two__bg" style="
+        background-image: url({% static "assets/images/background/footer-bg-1-1.jpg" %});
+      "></div>
+  <!-- /.cta-two__bg -->
+  <div class="container">
+    <h3>
+      {% trans "Tez bir zamanda bizimlə əlaqəyə keçmək isteyirsən?" %}
+    </h3>
+    <div class="cta-two__btn-block">
+      <a href="{% url "info:contact" %}" class="thm-btn cta-two__btn">{% trans "Bizimlə əlaqə" %}</a><!-- /.thm-btn cta-two__btn -->
+    </div>
+    <!-- /.cta-two__btn-block -->
+  </div>
+  <!-- /.container -->
+</section>
+
+
+<!-- /.cta-two -->
+
+<section class="course-one__title mt-5">
+  <div class="course-one__bg" style="background-image: url({% static "assets/images/shapes/water-wave-bg.png" %})"></div>
+  <!-- /.course-one__bg -->
+  <div class="container">
+    <div class="block-title text-left">
+      <img src="{% static "assets/images/shapes/sec-line-1.png" %}" alt="" />
+      <p class="text-uppercase">{% trans "Bütün məhsullar" %}</p>
+      <h3 class="text-uppercase">
+        {% trans "Məhsullarımız" %}
+      </h3>
+    </div>
+    <!-- /.block-title -->
+    <div class="text-block">
+      <p class="m-0" style="width: 500px">
+        {{static_info.products_slogan}}
+      </p>
+    </div>
+    <!-- /.text-block -->
+  </div>
+  <!-- /.container -->
+</section>
+<!-- /.course-one__title -->
+
+<div class="course-one course-one__carousel-wrapper">
+  <!-- footer fishes -->
+  <img src="{% static "assets/images/shapes/fish-1-1.png" %}" alt="" class="site-footer__fish-1" />
+
+  <!-- footer trees -->
+  <img src="{% static "assets/images/shapes/tree-1-1.png" %}" class="site-footer__tree-1" alt="" />
+  <div class="container">
+    <div class="course-one__carousel thm__owl-carousel owl-carousel owl-theme"
+      data-options='{"loop": true,"items": 3, "margin":30, "smartSpeed": 700, "autoplay": true, "autoplayTimeout": 5000, "autoplayHoverPause": true, "nav": false, "dots": false, "responsive": { "0": {"items": 1}, "767": {"items": 2}, "991": {"items": 2}, "1199": { "items": 3} }}'
+      data-carousel-prev-btn=".course-one__carousel-btn-left"
+      data-carousel-next-btn=".course-one__carousel-btn-right">
+
+    {% for recom_product in recommended_products %}
+    
+    <div class="item">
+      <div class="course-one__single">
+        <div class="course-one__image">
+          <a href="{% url "shop:product-detail" pk=recom_product.product.pk slug=recom_product.product.slug %}" class="course-one__cat">{{recom_product.product.category.title}}</a>
+          <div class="course-one__image-inner">
+            <img src="{{recom_product.product.images.first.image.url}}" alt="" />
+            <a href="{% url "shop:product-detail" pk=recom_product.product.pk slug=recom_product.product.slug %}"><i class="scubo-icon-plus-symbol"></i></a>
+          </div>
+          <!-- /.course-one__image-inner -->
+        </div>
+        <!-- /.course-one__image -->
+        <div class="course-one__content hvr-sweep-to-bottom">
+          <h3>
+            <a href="{% url "shop:product-detail" pk=recom_product.product.pk slug=recom_product.product.slug %}">{{recom_product.product.title}}</a>
+          </h3>
+          <div class="course-content">
+            <p>
+              {{recom_product.product.description|truncatechars:100}}
+            </p>
+          </div>
+        </div>
+        <!-- /.course-one__content -->
+        <a href="{% url "shop:product-detail" pk=recom_product.product.pk slug=recom_product.product.slug %}" class="course-one__book-link">{% trans "Ətraflı" %}</a>
+      </div>
+      <!-- /.course-one__single -->
+    </div>
+
+    {% endfor %}
+
+
+    </div>
+    <!-- /.course-one__carousel thm__owl-carousel owl-carousel owl-theme -->
+
+    <div class="course-one__carousel-btn__wrapper">
+      <a class="course-one__carousel-btn-left" href="#"><i class="fa fa-angle-left"></i></a>
+      <a class="course-one__carousel-btn-right" href="#"><i class="fa fa-angle-right"></i></a>
+    </div>
+    <!-- /.course-one__carousel-btn__wrapper -->
+  </div>
+  <!-- /.container -->
+</div>
+<!-- /.course-one__carousel-wrapper -->
+
+
+<section class="cta-five">
+  <div class="cta-five__bg" style="background-image: url({% static "assets/images/background/cta-5-1-bg.jpg" %})"></div>
+  <!-- /.cta-five__bg -->
+
+  <section class="cta-four about-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-6">
+          <div class="cta-four__image wow fadeInLeft homeabout" data-wow-duration="1500ms">
+            <img src="{{home_about.image.url}}" alt="" />
+
+            <!-- /.cta-four__image-content -->
+          </div>
+          <!-- /.cta-four__image -->
+        </div>
+        <!-- /.col-lg-6 -->
+        <div class="col-xl-6">
+          <div class="cta-four__content">
+            <div class="block-title text-left">
+              <img src="{% static "assets/images/shapes/sec-line-1.png" %}" alt="" />
+              <p class="text-uppercase">{% trans "Haqqımızda" %}</p>
+              <h3 class="text-uppercase" style="width: 450px">
+                {{home_about.title}}
+              </h3>
+            </div>
+            <!-- /.block-title -->
+            <p>
+              {{home_about.description}}
+            </p>
+            <a href="{% url "info:about" %}" class="thm-btn cta-four__btn">{% trans "Ətraflı bax" %}</a><!-- /.thm-btn cta-four__btn -->
+          </div>
+          <!-- /.cta-four__content -->
+        </div>
+        <!-- /.col-lg-6 -->
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container -->
+  </section>
+  <!-- /.cta-four -->
+  <!-- /.container -->
+</section>
+<!-- /.cta-five -->
+<section class="service-one we-offer">
+  <!-- footer fishes -->
+  <img src="{% static "assets/images/shapes/fish-service-1.png" %}" alt="" class="site-footer__fish-1" />
+  <img src="{% static "assets/images/shapes/fish-service-2.png" %}" alt="" class="site-footer__fish-3" />
+
+  <!-- footer trees -->
+  <img src="{% static "assets/images/shapes/tree-service-1.png" %}" class="site-footer__tree-2" alt="" />
+
+  <div class="container">
+    <div class="block-title text-center">
+      <img src="{% static "assets/images/shapes/sec-line-1.png" %}" alt="" />
+      <p class="text-uppercase">{% trans "təkliflər" %}</p>
+      <h3 class="text-uppercase">{% trans "Biz nə təklif edirik?" %}</h3>
+    </div>
+    <!-- /.block-title -->
+    <div class="row">
+      {% for offer in offers %}
+      
+      <div class="col-xl-3 col-md-6 col-sm-12">
+        <div class="service-one__single">
+          <i class="scubo-icon-aqualung"></i>
+          <h3>
+            <a href="#">{{offer.title}}</a>
+          </h3>
+          <div class="offer-desc">
+            <p>
+              {{offer.description}}
+            </p>
+          </div>
+        </div>
+        <!-- /.service-one__single -->
+      </div>
+      
+      {% endfor %}
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container -->
+</section>
+<!-- /.service-one -->
+
+
+<section class="video-two" style="background-image: url({% static "assets/images/shapes/video-2-bg.png" %})">
+  <img src="{% static "assets/images/shapes/swimmer-1-1.png" %}" class="video-two__swimmer" alt="" />
+  <div class="container">
+    <div class="video-two__box wow fadeInRight homevideo" data-wow-duration="1500ms">
+      <img src="{{our_work.image.url}}" alt="" />
+      <a href="{{our_work.video_url}}" class="video-popup"><i class="fa fa-play"></i></a>
+      <!-- /.video-popup -->
+    </div>
+    <!-- /.video-two__box -->
+    <div class="row">
+      <div class="col-xl-6">
+        <div class="video-two__content">
+          <div class="block-title">
+            <img src="{% static "assets/images/shapes/sec-line-1.png" %}" alt="" />
+            <p class="text-uppercase">{% trans "Bizimlə öyrənin" %}</p>
+            <h3 class="text-uppercase">{% trans "İşlərimiz" %}</h3>
+          </div>
+          <!-- /.block-title -->
+          <p>
+            {{our_work.description}}
+          </p>
+          <a href="{% url "info:contact" %}" class="thm-btn video-two__btn">{% trans "Əlaqə" %}</a>
+          <!-- /.thm-btn video-two__btn -->
+        </div>
+        <!-- /.video-two__content -->
+      </div>
+      <!-- /.col-lg-6 -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container -->
+</section>
+<!-- /.video-two -->
+<section class="funfact-one funfact-one__home-one">
+  <div class="container">
+    <div class="funfact-one__title">{% trans "Statistika" %}</div>
+    <!-- /.funfact-one__title -->
+    <div class="inner-container">
+      <div class="row">
+        <div class="col-lg-3 col-md-6">
+          <div class="funfact-one__single">
+            <div class="funfact-one__count counter">{{statistic.employees}}</div>
+            <!-- /.funfact-one__count -->
+            <div class="funfact-one__content">
+              <h3> {% trans "Əməkdaşlarımız" %} </h3>
+            </div>
+            <!-- /.funfact-one__content -->
+          </div>
+          <!-- /.funfact-one__single -->
+        </div>
+        <!-- /.col-lg-3 col-md-6 -->
+        <div class="col-lg-3 col-md-6">
+          <div class="funfact-one__single">
+            <div class="funfact-one__count counter">{{statistic.branches}}</div>
+            <!-- /.funfact-one__count -->
+            <div class="funfact-one__content">
+              <h3> {% trans "Filiallarımız" %} </h3>
+            </div>
+            <!-- /.funfact-one__content -->
+          </div>
+          <!-- /.funfact-one__single -->
+        </div>
+        <!-- /.col-lg-3 col-md-6 -->
+        <div class="col-lg-3 col-md-6">
+          <div class="funfact-one__single">
+            <div class="funfact-one__count counter">{{statistic.diversity}}</div>
+            <!-- /.funfact-one__count -->
+            <div class="funfact-one__content">
+              <h3>{% trans "Məhsul çeşidliliyi" %}</h3>
+            </div>
+            <!-- /.funfact-one__content -->
+          </div>
+          <!-- /.funfact-one__single -->
+        </div>
+        <!-- /.col-lg-3 col-md-6 -->
+        <div class="col-lg-3 col-md-6">
+          <div class="funfact-one__single">
+            <div class="funfact-one__count counter">{{statistic.year_of_operation}}</div>
+            <!-- /.funfact-one__count -->
+            <div class="funfact-one__content">
+              <h3>{% trans "Fəaliyyət illərimiz" %} </h3>
+            </div>
+            <!-- /.funfact-one__content -->
+          </div>
+          <!-- /.funfact-one__single -->
+        </div>
+        <!-- /.col-lg-3 col-md-6 -->
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.inner-container -->
+  </div>
+  <!-- /.container -->
+</section>
+<!-- /.funfact-one -->
+
+
+
+<section class="blog-one blog-one__home-one" style="
+      background-image: url({% static "assets/images/shapes/about-brand-team-bg.png" %});
+    ">
+  <div class="container">
+    <div class="block-title text-center">
+      <img src="{% static "assets/images/shapes/sec-line-1.png" %}" alt="" />
+      <p class="text-uppercase">{% trans "xəbərlərdən" %}</p>
+      <h3 class="text-uppercase">{% trans "Xəbərlər" %}</h3>
+    </div>
+    <!-- /.block-title -->
+    <div class="row">
+      {% for article in articles %}
+      
+      <div class="col-lg-4 col-md-6">
+        <div class="blog-one__single">
+          <div class="blog-one__image">
+            <a href="{% url "blog:article" pk=article.pk slug=article.slug %}" class="blog-one__date">{{article.created.date|date:"d F Y"}}</a>
+            <div class="blog-one__image-inner">
+              <img src="{{article.image.url}}" alt="" />
+              <a href="{% url "blog:article" pk=article.pk slug=article.slug %}"><i class="scubo-icon-plus-symbol"></i></a>
+            </div>
+            <!-- /.blog-one__image-inner -->
+          </div>
+          <!-- /.blog-one__image -->
+          <div class="blog-one__content">
+            <h3>
+              <a href="{% url "blog:article" pk=article.pk slug=article.slug %}">{{article.title}}</a>
+            </h3>
+            <p>
+              {{article.description|truncatechars:100}}
+            </p>
+            <div class="blog-one__meta">
+              <div class="thm-btn news-detail">
+                <a href="{% url "blog:article" pk=article.pk slug=article.slug %}">{% trans "ətraflı" %}</a>
+              </div>
+            </div>
+            <!-- /.blog-one__meta -->
+          </div>
+          <!-- /.blog-one__content -->
+        </div>
+        <!-- /.blog-one__single -->
+      </div>
+
+      {% endfor %}
+      <!-- /.col-lg-4 col-md-12 -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container -->
+</section>
+<!-- /.blog-one -->
+
+
+
+<section class="brand-one brand-one__home-one">
+  <div class="container">
+    <div class="block-title text-center">
+      <h3 class="text-uppercase">{% trans "Partnyorlar" %}</h3>
+    </div>
+    <div class="brand-one__carousel owl-carousel thm__owl-carousel owl-theme"
+      data-options='{"loop": true, "autoplay": true, "autoplayHoverPause": true, "autoplayTimeout": 1000, "items": 6, "dots": false, "nav": true, "margin": 30, "smartSpeed": 700, "responsive": { "0": {"items": 2, "margin": 30}, "480": {"items": 3, "margin": 30}, "991": {"items": 4, "margin": 50}, "1199": {"items": 6, "margin": 20}}}'>
+      {% for partner in partners %}
+
+      <div class="item">
+        <img src="{{partner.image.url}}" alt="{{partner.title}}" />
+      </div>
+      
+      {% endfor %}
+    </div>
+
+    <!-- /.brand-one__carousel owl-carousel thm__owl-carousel owl-theme -->
+  </div>
+  <!-- /.container -->
+</section>
+<!-- /.brand-one -->
+
+<div class="whatsapp-link">
+  <a href="https://api.whatsapp.com/send?phone={{social_media.whatsapp}}">
+    <img src="https://ehome.az/static/assets/images/wp2.png" alt="" style="max-width: 45px" />
+  </a>
+</div>
+
+
+{% endblock main %}

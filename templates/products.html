@@ -1,0 +1,100 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+{% load urlhelper %}
+{% load i18n %}
+
+
+
+{% block title %}
+
+<title>{% trans "Scubo - Məhsullar" %}</title>
+
+{% endblock title %}
+
+
+
+{% block main %}
+
+    <section class="page-header">
+      <div class="page-header__bg" style="
+            background-image: url({% static "assets/images/background/footer-bg-1-1.jpg" %});
+          "></div>
+      <!-- /.page-header__bg -->
+      <div class="container">
+        <ul class="list-unstyled thm-breadcrumb">
+          <li><a href="{% url "info:home" %}">{% trans "Ana səhifə" %}</a></li>
+          <li class="active"><a href="#">{% trans "Məhsullar" %}</a></li>
+        </ul>
+        <!-- /.list-unstyled -->
+        <h2 class="page-header__title">{% trans "Bütün məhsullar" %}</h2>
+        <!-- /.page-header__title -->
+      </div>
+      <!-- /.container -->
+    </section>
+    <!-- /.page-header -->
+
+    <section class="course-one">
+      <div class="container">
+        <div class="row">
+          {% for product in products %}
+          
+          <div class="col-lg-4 col-md-6">
+            <div class="course-one__single">
+              <div class="course-one__image">
+                <a href="{% url "shop:product-detail" pk=product.pk slug=product.slug %}" class="course-one__cat">{{product.category.title}}</a>
+                <div class="course-one__image-inner">
+                  <img src="{{product.images.first.image.url}}" alt="" />
+                  <a href={% url "shop:product-detail" pk=product.pk slug=product.slug %}><i class="scubo-icon-plus-symbol"></i></a>
+                </div>
+                <!-- /.course-one__image-inner -->
+              </div>
+              <!-- /.course-one__image -->
+              <div class="course-one__content hvr-sweep-to-bottom">
+                <h3><a href={% url "shop:product-detail" pk=product.pk slug=product.slug %}>{{product.title}}</a></h3>
+                <div class="course-content">
+                  <p>
+                    {{product.description}}
+                  </p>
+                </div>
+              </div>
+              <!-- /.course-one__content -->
+              <a href={% url "shop:product-detail" pk=product.pk slug=product.slug %} class="course-one__book-link">{% trans "Ətraflı" %}</a>
+            </div>
+            <!-- /.course-one__single -->
+          </div>
+
+          {% endfor %}
+
+        </div>
+        <!-- /.row -->
+        <div class="post-pagination">
+          {% if page.has_previous %}
+            <a href="?{% edit_query request page=page.previous_page_number %}" class="post-pagination__prev">
+              <i class="fa fa-angle-left"></i>
+            </a>
+          {% endif %}
+
+
+          {% for page_number in paginator.page_range %}
+
+          {% if page_number == page.number %}
+            <a href="?{% edit_query request page=page_number %}" class="active">{{page_number}}</a>
+          {% else %}
+            <a href="?{% edit_query request page=page_number %}">{{page_number}}</a>
+          {% endif %}
+
+          {% endfor %}
+
+          {% if page.has_next %}
+            <a href="?{% edit_query request page=page.next_page_number %}" class="post-pagination__next">
+              <i class="fa fa-angle-right"></i>
+            </a>
+          {% endif %}
+        </div>
+        <!-- /.post-pagination -->
+      </div>
+      <!-- /.container -->
+    </section>
+    <!-- /.course-one -->
+
+{% endblock main %}

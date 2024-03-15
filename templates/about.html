@@ -1,0 +1,137 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+{% load i18n %}
+
+
+{% block title %}
+
+<title>{% trans "Scubo - Haqqımızda" %}</title>
+
+{% endblock title %}
+
+
+{% block main %}
+
+
+<section class="page-header">
+  <div class="page-header__bg" style="
+        background-image: url({% static "assets/images/background/footer-bg-1-1.jpg" %});
+      "></div>
+  <!-- /.page-header__bg -->
+  <div class="container">
+    <ul class="list-unstyled thm-breadcrumb">
+      <li><a href="{% url "info:home" %}">{% trans "Ana səhifə" %}</a></li>
+      <li class="active"><a href="#">{% trans "Haqqımızda" %}</a></li>
+    </ul>
+    <!-- /.list-unstyled -->
+    <h2 class="page-header__title">{% trans "Haqqımızda" %}</h2>
+    <!-- /.page-header__title -->
+  </div>
+  <!-- /.container -->
+</section>
+<!-- /.page-header -->
+
+<section class="about-two">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 d-flex about-two__content-wrapper">
+        <div class="my-auto">
+          <div class="about-two__content">
+            <div class="block-title text-left">
+              <img src="{% static "assets/images/shapes/sec-line-1.png" %}" alt="" />
+              <p class="text-uppercase">{% trans "Our benefits" %}</p>
+              <h3 class="text-uppercase">
+                {{about.title}}
+              </h3>
+            </div>
+            <!-- /.block-title -->
+            <div class="about-desc">
+              <p>{{about.description|linebreaks}}</p>
+            </div>
+
+            <!-- <ul class="list-unstyled about-two__list">
+              <li>
+                <span class="about-two__list-count"></span>
+                All the lorem ipsum generators on the Internet
+              </li>
+              <li>
+                <span class="about-two__list-count"></span>
+                When an unknown printer took a galley
+              </li>
+              <li>
+                <span class="about-two__list-count"></span>
+                Various versions have evolved years
+              </li>
+            </ul> -->
+            <!-- /.list-unstyled about-two__list -->
+          </div>
+          <!-- /.about-two__content -->
+        </div>
+        <!-- /.my-auto -->
+      </div>
+      <!-- /.col-lg-6 -->
+      <div class="col-lg-6">
+        <div class="about-two__image wow fadeInRight" data-wow-duration="1500ms">
+          <img src="{{about.image.url}}" alt="" />
+        </div>
+        <!-- /.about-two__image -->
+      </div>
+      <!-- /.col-lg-6 -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container -->
+</section>
+<!-- /.about-two -->
+
+<section class="video-one">
+  <div class="video-one__bg" style="
+        background-image: url({% static "assets/images/background/video-bg-2-1.jpg" %});
+      "></div>
+  <!-- /.video-one__bg -->
+  <div class="container text-center">
+    <a href="{{about_video.url}}" class="video-popup"><i class="fa fa-play"></i></a>
+    <!-- /.video-popup -->
+    <h3>
+      {{about_video.title}}
+    </h3>
+  </div>
+  <!-- /.container -->
+</section>
+<!-- /.video-one -->
+
+
+
+<div class="team-brand__wrapper" style="
+      background-image: url({% static "assets/images/shapes/about-brand-team-bg.png" %});
+    ">
+
+  <section class="about-brand brand-one brand-one__home-one">
+    <div class="container">
+      <div class="block-title text-center">
+        <h3 class="text-uppercase">{% trans "Partnyorlar" %}</h3>
+      </div>
+      <div class="brand-one__carousel owl-carousel thm__owl-carousel owl-theme"
+        data-options='{"loop": true, "autoplay": true, "autoplayHoverPause": true, "autoplayTimeout": 1000, "items": 6, "dots": false, "nav": true, "margin": 30, "smartSpeed": 700, "responsive": { "0": {"items": 2, "margin": 30}, "480": {"items": 3, "margin": 30}, "991": {"items": 4, "margin": 50}, "1199": {"items": 6, "margin": 20}}}'>
+
+        {% for partner in partners %}
+
+      <div class="item">
+        <img src="{{partner.image.url}}" alt="{{partner.title}}" />
+      </div>
+      
+      {% endfor %}
+      
+      </div>
+
+      <!-- /.brand-one__carousel owl-carousel thm__owl-carousel owl-theme -->
+    </div>
+    <!-- /.container -->
+  </section>
+  <!-- /.brand-one -->
+
+  <!-- /.brand-one -->
+</div>
+
+
+{% endblock main %}
